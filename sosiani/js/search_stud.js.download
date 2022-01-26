@@ -1,0 +1,20 @@
+$(function(){
+/*    $.post('../classes/action_test.php',
+        {
+        },
+        function(res){
+            $('#result').html(res);                            
+        }
+    );*/
+    $('#search_stud').keyup(function(){          
+        $.post('../classes/action_test.php',
+            {
+                val:$('#search_stud').val()
+            },
+            function(res){
+                $('#result').html(res);                            
+            }
+        );
+    });
+    
+});

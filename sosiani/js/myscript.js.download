@@ -1,0 +1,283 @@
+$(function(){
+
+	//Error message variables for admin panel
+	// var err_author;
+	var err_title_news;
+	var err_title_event;
+	
+	/*$('#author').focusout(function(){
+		validateAuthor();
+	});*/
+	
+	$('#title_news').focusout(function(){
+		validateTitleNews();
+	});
+	
+	$('#form_news').submit(function(){
+		// err_author=false;
+		err_title_news=false;
+		// validateAuthor();
+		validateTitleNews();
+		if(err_title_news==false)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	});
+	
+	$('#title_event').focusout(function(){
+		validateTitleEvent();  
+	});
+	
+	$('#form_event').submit(function(){
+		err_title_event=false;
+		validateTitleEvent(); 
+		if(err_title_event==false)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	});
+	//error message variables for parent registration form
+	var err_fname;
+	var err_lname;
+	var err_phone;
+	var err_email;
+	// var err_usern;
+	var err_pwd;
+	var err_cpwd;	
+	
+	//on submitting parent registration form	
+	$("#register_parent_form").submit(function(){
+		//reset all error variables to false
+		err_fname=false;
+		err_lname=false;
+		err_phone=false;
+		// err_usern=false;
+		err_pwd=false;
+		err_cpwd=false;
+		err_email=false;
+		//revalidate all the fields
+		validateFname();
+		validateLname();
+		validatePhone();
+		validateEmail();
+		// validateUsername();
+		validatePassword();
+		confirmPassword();
+		
+		if(err_fname==false && err_lname==false && err_phone==false && err_email==false && err_pwd==false && err_cpwd==false)
+		{
+			return true;
+		}
+		else{
+			return false;
+		}
+	});
+	
+	
+	$('#parent_fname').focusout(function(){
+		validateFname();
+	});
+	
+	$('#parent_lname').focusout(function(){
+		validateLname();
+	});
+	$('#phone').keyup(function(){
+		validatePhone();
+	});
+	
+	$('#phone').focusout(function(){
+		validatePhone();
+	});
+
+	$('#parent_email').focusout(function(){
+		validateEmail();
+	});
+	
+	/*$('#parent_usr').focusout(function(){
+		validateUsername();
+	});*/
+	
+	$('#parent_pass').keyup(function(){
+		validatePassword();
+	});
+	
+	$('#parent_pass2').keyup(function(){
+		confirmPassword();
+	});
+	
+	
+	//validate Last Name
+	function validateFname()
+	{
+		err_fname=false;
+		var isLetters=/^[a-zA-Z']+$/.test($('#parent_fname').val().trim())===true;		
+		if($('#parent_fname').val().trim().length<3)
+		{
+			$('#vFname').html("First name too short.");
+			err_fname=true;
+		}else if(!isLetters)
+		{
+			$('#vFname').html("Invalid name.");
+			err_fname=true;
+		}else{
+			$('#vFname').html("");
+		}
+	}
+	
+	//validate Last Name
+	function validateLname()
+	{
+		err_lname=false;
+		var isLetters=/^[a-zA-Z']+$/.test($('#parent_lname').val().trim())===true;		
+		if($('#parent_lname').val().trim().length<3)
+		{
+			$('#vLname').html("Last name too short.");
+			err_lname=true;
+		}else if(!isLetters)
+		{
+			$('#vLname').html("Invalid name.");
+			err_lname=true;
+		}else{
+			$('#vLname').html("");
+		}
+	}
+	
+	//validate phone number
+	function validatePhone()
+	{
+		err_phone=false;
+		var isNum=isNaN($('#phone').val().trim())===false;
+				
+		if($('#phone').val().trim().length<10 || $('#phone').val().trim().length>13)
+		{
+			$('#vPhone').html("Invalid phone number.");
+			err_phone=true;
+		}else if(!isNum)
+		{
+			$('#vPhone').html("Should be numbers only.");
+			err_phone=true;
+		}else{
+			$('#vPhone').html("");
+		}
+	}
+
+
+	//validate email
+	function validateEmail()
+	{
+		err_email=false;
+		var validEmail=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/.test($('#parent_email').val().trim())===true;
+		if(!validEmail)
+		{
+			$('#vEmail').html("Invalid email address");
+			err_email=true;
+		}else{
+			$('#vEmail').html("");
+		}
+	}
+	
+	//validate username
+	function validateUsername()
+	{
+		err_usern=false;
+		//var validUsername=/^[a-z0-9_-]$/.test($('#parent_usr').val().trim())===true;
+		if($('#parent_usr').val().trim().length<3)
+		{
+			$('#vUname').html("Username too short");
+			err_usern=true;
+		}
+		else if($('#parent_usr').val().trim()>16)
+		{
+			$('#vUname').html("Username too long");
+			err_usern=true;
+		}else{
+			$('#vUname').html("");
+		}
+		
+	}
+	
+	//Validate password
+	function validatePassword()
+	{
+		err_pwd=false;
+		if($('#parent_pass').val().trim().length<6 || $('#parent_pass').val().trim().length>30)
+		{
+			$('#vPwd').html("Enter between 6 and 30 characters");
+			err_pwd=true;
+		}else{
+			$('#vPwd').html("");
+		}
+	}
+	
+	//validate confirm password
+	function confirmPassword()
+	{
+		err_cpwd=false;
+		if($('#parent_pass').val().trim()!==$('#parent_pass2').val().trim())
+		{
+			$('#vCpwd').html("Passwords don't match");
+			err_cpwd=true;
+		}else{
+			$('#vCpwd').html("");
+		}
+	}
+	
+	//Validate author's name
+	function validateAuthor()
+	{
+		err_author=false;
+		var isLetters=/^[a-zA-Z' ]+$/.test($('#author').val().trim())===true;		
+		if($('#author').val().trim().length<3)
+		{
+			// $('#vAuthor').html("Author's name too short.");
+			err_author=true;
+		}else if(!isLetters)
+		{
+			// $('#vAuthor').html("Invalid name.");
+			err_author=true;
+		}else{
+			$('#vAuthor').html("");
+		}
+	}
+	
+	//Validate Title News	
+	function validateTitleNews()
+	{
+		err_title_news=false;
+		var isLetters=/^[a-zA-Z' -]+$/.test($('#title_news').val().trim())===true;		
+		if($('#title_news').val().trim().length<3)
+		{
+			$('#vTitleNews').html("Title length too short!");
+			err_title_news=true;
+		}else if(!isLetters)
+		{
+			$('#vTitleNews').html("Invalid title.");
+			err_title_news=true;
+		}else{
+			$('#vTitleNews').html("");
+		}
+	}
+
+	//Validate Title Event	
+	function validateTitleEvent()
+	{
+		err_title_event=false;
+		var isLetters=/^[a-zA-Z' -]+$/.test($('#title_event').val().trim())===true;		
+		if($('#title_event').val().trim().length<3)
+		{
+			$('#vTitleEvent').html("Title length too short!");
+			err_title_event=true;
+		}else if(!isLetters)
+		{
+			$('#vTitleEvent').html("Invalid title.");
+			err_title_event=true;
+		}else{
+			$('#vTitleEvent').html("");
+		}
+	}
+		   
+});

@@ -1,0 +1,40 @@
+$(function(){
+	$("#adm_letter").on('click',function(){
+		$("#adm_l").fadeToggle(1);
+	});
+	$("#dismis").on('click',function(){
+		$("#adm_l").hide(1);
+	});
+	$("#adm_l").on('keyup',function(){
+		$.post(
+			"../classes/letter_download.php",
+			{
+				index:$("#search_index").val()
+			},
+			function(data){
+				$("#downL").html(data);
+		});
+	});
+
+	$("#adm_l").on('change',function(){
+	$.post(
+		"../classes/letter_download.php",
+		{
+			index:$("#search_index").val()
+		},
+		function(data){
+			$("#downL").html(data);
+		});
+	});
+	$("#find").click(function(){
+		$.post(
+		"../classes/letter_download.php",
+		{
+			index:$("#search_index").val()
+		},
+		function(data){
+			$("#downL").html(data);
+		});
+	});
+
+});
